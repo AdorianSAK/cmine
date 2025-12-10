@@ -1,1 +1,0 @@
-# cmine project
