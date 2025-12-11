@@ -11,6 +11,7 @@
 #include "tools.h"
 
 void porcentualGenerator(int expected, int otherCheck, int brush);
+int eightSensor(int x, int y, int criteria);
 
 void worldGenerator()
 {
@@ -25,6 +26,24 @@ void worldGenerator()
 
 	//	== == == == == Obstacle Generation == == == == ==
 	porcentualGenerator(expectedObstacles, 2, 1);
+	std::cout << "Obstacles generated.\n";
+
+	//	== == == == == Rock Floor Generator == == == == ==
+	for(int y = 1; y < worldHeigh - 1; y ++)
+	{
+		for(int x = 1; x < worldWidth - 1; x ++)
+		{
+			if(world[x][y] == 1)
+			{
+				continue;
+			}
+			if(eightSensor(x, y, 1) >= 3)
+			{
+				world[x][y] = 4;
+			}
+		}
+	}
+	std::cout << "Rock Floor Generted.\n";
 }
 
 void porcentualGenerator(int expected, int otherCheck, int brush)
@@ -34,8 +53,28 @@ void porcentualGenerator(int expected, int otherCheck, int brush)
 	{
 		do
 		{
-			x = randomSelect(0, worldWidth);
-			y = randomSelect(0, worldHeigh);
+			x = randomSelect(0, worldWidth - 1);
+			y = randomSelect(0, worldHeigh - 1);
+			if(world[x][y] != 1 && world[x][y] != otherCheck)
+			{
+				world[x][y] = brush;
+				break;
+			}
 		}while(true);
+		//std::cout << "One cell correctly painted." << i << '\n';
 	}
+}
+
+int eightSensor(int x, int y, int criteria)
+{
+	int count = 0;
+	count += world[x - 1][y - 1] == criteria? 1 : 0;
+	count += world[x - 0][y - 1] == criteria? 1 : 0;
+	count += world[x + 1][y - 1] == criteria? 1 : 0;
+	count += world[x - 1][y - 0] == criteria? 1 : 0;
+	count += world[x + 1][y - 0] == criteria? 1 : 0;
+	count += world[x - 1][y + 1] == criteria? 1 : 0;
+	count += world[x - 0][y + 1] == criteria? 1 : 0;
+	count += world[x + 1][y + 1] == criteria? 1 : 0;
+	return count;
 }
