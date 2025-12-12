@@ -7,7 +7,7 @@
 //	4 = Rock Floor: Similar to translucent gray tone, it's a safe cell with no mines at all.
 //	5 & 7 = 🚩 Flag: Represented by an emoji, 5 means a flagged cell with no mines and 7 has a mine.
 //	6 & 8 = ? Inquiry: The question mark, 6 means no mines, and 8 has a mine.
-#include <iostream>
+#include "variables.h"
 #include <cstdlib>
 
 void porcentualGenerator(int expected, int otherCheck, int brush);

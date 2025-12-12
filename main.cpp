@@ -1,4 +1,4 @@
-#include <iostream>
+#include "variables.h"
 
 void worldGenerator();
 void drawMap();
