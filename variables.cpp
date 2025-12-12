@@ -1,8 +1,6 @@
 #include <iostream>
 #include <random>
 
-#pragma once
-
 const int worldWidth = 2001;
 const int worldHeigh = 2001;
 int obstaclePercent = 33;

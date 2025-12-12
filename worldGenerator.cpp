@@ -8,10 +8,12 @@
 //	5 & 7 = 🚩 Flag: Represented by an emoji, 5 means a flagged cell with no mines and 7 has a mine.
 //	6 & 8 = ? Inquiry: The question mark, 6 means no mines, and 8 has a mine.
 #include <iostream>
-#include "tools.h"
+#include <cstdlib>
 
 void porcentualGenerator(int expected, int otherCheck, int brush);
 int eightSensor(int x, int y, int criteria);
+void playerSpawnArea();
+bool isIn(int x, int y, int ratio);
 
 void worldGenerator()
 {
@@ -23,12 +25,13 @@ void worldGenerator()
 			world[x][y] = 0;
 		}
 	}
+	std::cout << "The grid is already popullated with 0s.\n";
 
 	//	== == == == == Obstacle Generation == == == == ==
 	porcentualGenerator(expectedObstacles, 2, 1);
 	std::cout << "Obstacles generated.\n";
 
-	//	== == == == == Rock Floor Generator == == == == ==
+	//	== == == == == Rock Floor Generation == == == == ==
 	for(int y = 1; y < worldHeigh - 1; y ++)
 	{
 		for(int x = 1; x < worldWidth - 1; x ++)
@@ -43,7 +46,19 @@ void worldGenerator()
 			}
 		}
 	}
-	std::cout << "Rock Floor Generted.\n";
+	std::cout << "Rock Floor generated.\n";
+
+	//	== == == == == Mine Generation == == == == ==
+	porcentualGenerator(expectedMines, 4, 1);
+	std::cout << "Mines generated.\n";
+
+	//	== == == == == Treasure Generation == == == == ==
+	porcentualGenerator(expectedGems, 2, 3);
+	std::cout << "Treasure generated.\n";
+
+	//	== == == == == Spawn Area Generation == == == == ==
+	playerSpawnArea();
+	std::cout << "Spawn area generated.\n";
 }
 
 void porcentualGenerator(int expected, int otherCheck, int brush)
@@ -77,4 +92,38 @@ int eightSensor(int x, int y, int criteria)
 	count += world[x - 0][y + 1] == criteria? 1 : 0;
 	count += world[x + 1][y + 1] == criteria? 1 : 0;
 	return count;
+}
+
+void playerSpawnArea()
+{
+	int limits = (playerSpawnRatio * 2) + 1;
+	int initialMeasure = worldCenter - playerSpawnRatio;
+
+	for(int y = 0; y < limits; y ++)
+	{
+		for(int x = 0; x < limits; x ++)
+		{
+			if(isIn(x, y, playerSpawnRatio))
+			{
+				if(randomSelect(1, 11) <= obstaclesInSpawn && !(x == playerSpawnRatio && y == playerSpawnRatio))
+				{
+					world[initialMeasure + x][initialMeasure + y] = 1;
+				}else
+				{
+					world[initialMeasure + x][initialMeasure + y] = 4;
+				}
+			}
+		}
+	}
+}
+
+bool isIn(int x, int y, int ratio)
+{
+	int absoluteX = abs(ratio - x);
+	absoluteX *= absoluteX;
+	int absoluteY = abs(ratio - y);
+	absoluteY *= absoluteY;
+	ratio *= ratio;
+
+	return absoluteX + absoluteY <= ratio + (ratio * 0.07);
 }
