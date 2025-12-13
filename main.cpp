@@ -2,6 +2,7 @@
 
 void worldGenerator();
 void drawMap();
+void controller();
 
 int main()
 {
@@ -10,6 +11,7 @@ int main()
 	while(gameIsOn)
 	{
 		drawMap();
+		controller();
 	}
 
 	return 0;

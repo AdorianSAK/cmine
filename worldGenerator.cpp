@@ -49,7 +49,7 @@ void worldGenerator()
 	std::cout << "Rock Floor generated.\n";
 
 	//	== == == == == Mine Generation == == == == ==
-	porcentualGenerator(expectedMines, 4, 1);
+	porcentualGenerator(expectedMines, 4, 2);
 	std::cout << "Mines generated.\n";
 
 	//	== == == == == Treasure Generation == == == == ==

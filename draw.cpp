@@ -8,6 +8,9 @@ std::string systemColorSelector();
 int eightSensor(int x, int y, int criteria);
 void screenDrawer();
 void upperMargindrawer();
+void bottomMarginDrawer();
+int totalDetected();
+void pauseControl();
 
 void drawMap()
 {
@@ -17,6 +20,7 @@ void drawMap()
 	std::cout << systemColor;
 	upperMargindrawer();
 	screenDrawer();
+	bottomMarginDrawer();
 }
 
 void positionMarker()
@@ -60,7 +64,7 @@ void screenDrawer()
 				std::cout << systemColor << "? ";
 			}else if(world[localX + x][localY + y] == 5 || world[localX + x][localY + y] == 7)
 			{
-				std::cout << "🚩 ";
+				std::cout << "🚩";
 			}else if(world[localX + x][localY + y] == 4)
 			{
 				std::cout << DARKGRAY << "▒▒";
@@ -70,6 +74,9 @@ void screenDrawer()
 			}else if(world[localX + x][localY + y] == 1)
 			{
 				std::cout << systemColor << "██";
+			}else if(world[localX + x][localY + y] == 2)
+			{
+				std::cout << "💣";
 			}else
 			{
 				std::cout << YELLOW << "▒▒";
@@ -78,6 +85,28 @@ void screenDrawer()
 		}
 		std::cout << "||\n";
 	}
+}
+
+void bottomAssistDraw(std::string thingToDraw)
+{
+	for(int i = 0; i < (screenWidth / 2) - 2; i ++)
+	{
+		std::cout << thingToDraw;
+	}
+}
+
+void bottomMarginDrawer()
+{
+	std::cout << "\t\t\t💀";
+	bottomAssistDraw("==");
+	std::cout << "💀======💀";
+	bottomAssistDraw("==");
+	std::cout << "💀\n\t\t\t ";
+	bottomAssistDraw("  ");
+	std::cout << " ||   " << totalDetected() << systemColor
+			  << "  ||\n\t\t\t  ";
+	bottomAssistDraw("  ");
+	std::cout << "💀======💀\n";
 }
 
 void upperMargindrawer()
@@ -124,4 +153,13 @@ std::string systemColorSelector()
 void clearScreen()
 {
 	std::cout << "\033[2J\033[1;1H";
+}
+
+void pauseScreen()
+{
+	clearScreen();
+	std::cout << "\n\n\t\tGame Paused\n\n\t\t Press Enter to contunue.\n"
+			  << "\n\t\tPress Q to exit game\n\n\t\tPress S to see High Scores\n";
+	pauseControl();
+	return;
 }
