@@ -1,6 +1,10 @@
 #include "variables.h"
 
 void clearScreen();
+void applyValues();
+int eightSensor(int x, int y, int criteria);
+void worldGenerator();
+char readKey();
 
 void treasureCollect()
 {
@@ -11,6 +15,11 @@ void treasureCollect()
 	{
 		pickaxe ++;
 		pickCharge = 0;
+	}
+
+	if(eightSensor(playerX, playerY, 1) >= 3)
+	{
+		world[playerX][playerY] = 4;
 	}
 }
 
@@ -28,5 +37,10 @@ void stepOnMine()
 	}
 	std::cout << "\n\n\t\tYour Score is: " << score << '\n';
 
-	//	More shit here
+	//	More shit here, about scoring
+
+	applyValues();
+	worldGenerator();
+	std::cout << "\n\t\tPress any key to restart.\n";
+	readKey();
 }
