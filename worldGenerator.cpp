@@ -14,6 +14,7 @@ void porcentualGenerator(int expected, int otherCheck, int brush);
 int eightSensor(int x, int y, int criteria);
 void playerSpawnArea();
 bool isIn(int x, int y, int ratio);
+void clearScreen();
 
 void worldGenerator()
 {
@@ -59,6 +60,8 @@ void worldGenerator()
 	//	== == == == == Spawn Area Generation == == == == ==
 	playerSpawnArea();
 	std::cout << "Spawn area generated.\n";
+
+	clearScreen();
 }
 
 void porcentualGenerator(int expected, int otherCheck, int brush)

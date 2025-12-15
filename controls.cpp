@@ -9,6 +9,7 @@ void bannerPlacer(int playerInput);
 void pauseScreen();
 void treasureCollect();
 void stepOnMine();
+void minedObstacle();
 
 void controller()
 {
@@ -88,6 +89,9 @@ void playerMove(char playerInput)
     }else if(world[playerX][playerY] == 2 || world[playerX][playerY] == 7 || world[playerX][playerY] == 8)
     {
     	stepOnMine();
+    }else if(world[playerX][playerY] == 1)
+    {
+    	minedObstacle();
     }
 }
 
@@ -123,6 +127,12 @@ void bannerPlacer(int playerInput)
 	if(world[markerX][markerY] == 0 || world[markerX][markerY] == 2)
 	{
 		world[markerX][markerY] = world[markerX][markerY] == 0? 5 : 7;
+	}else if(world[markerX][markerY] == 5 || world[markerX][markerY] == 7)
+	{
+		world[markerX][markerY] = world[markerX][markerY] == 5? 6 : 8;
+	}else if(world[markerX][markerY] == 6 || world[markerX][markerY] == 8)
+	{
+		world[markerX][markerY] = world[markerX][markerY] == 6? 0 : 2;
 	}
 }
 

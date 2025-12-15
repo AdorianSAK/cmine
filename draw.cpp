@@ -1,7 +1,7 @@
 #include "variables.h"
 #include <iomanip>
 
-void clearScreen();
+//void clearScreen();
 void positionMarker();
 int directionFourSensor(int x, int y);
 std::string systemColorSelector();
@@ -11,10 +11,11 @@ void upperMargindrawer();
 void bottomMarginDrawer();
 int totalDetected();
 void pauseControl();
+void cleanScreen();
 
 void drawMap()
 {
-	clearScreen();
+	cleanScreen();
 	positionMarker();
 	systemColor = systemColorSelector();
 	std::cout << systemColor;
@@ -38,15 +39,25 @@ void positionMarker()
 		std::cout << RESET;
 	}
 	std::cout << (activePickaxe? "\t\t►►►" : "\t\t   ")
-			  << "⛏️  X " << std::setw(3) << pickaxe
+			  << "⛏️  X " << std::setw(3) << std::setfill(' ') 
+			  << pickaxe << std::setfill(' ')
+			  << std::setw(4) << std::setfill(' ')
 			  << (activePickaxe? "◄◄◄\n" : "\n")
-			  << RESET << "\tCBV: " << directionFourSensor(playerX, playerY)
+			  << std::setfill(' ')
+			  << RESET << "\tCBV: " 
+			  << std::setw(2) << std::setfill('0')
+			  << directionFourSensor(playerX, playerY)	// Collision Binary Value
+			  << std::setfill(' ')
 			  << "\t\t\t\t\t\t\t[" << GREEN;
 	for(int i = 0; i < pickCharge; i ++)
 	{
-		chargeBar += "█";
+		chargeBar += "#";
 	}
-	std::cout << std::setw(9) << std::left << chargeBar << RESET << "]\n\n"; 
+	while(chargeBar.size() < 9)
+	{
+		chargeBar += " ";
+	}
+	std::cout << chargeBar << RESET << "]\n\n"; 
 }
 
 void screenDrawer()
@@ -74,10 +85,10 @@ void screenDrawer()
 			}else if(world[localX + x][localY + y] == 1)
 			{
 				std::cout << systemColor << "██";
-			}else if(world[localX + x][localY + y] == 2)
+			}/*else if(world[localX + x][localY + y] == 2)
 			{
 				std::cout << "💣";
-			}else
+			}*/else
 			{
 				std::cout << YELLOW << "▒▒";
 			}
@@ -153,6 +164,11 @@ std::string systemColorSelector()
 void clearScreen()
 {
 	std::cout << "\033[2J\033[1;1H";
+}
+
+void cleanScreen()
+{
+	std::cout << "\033[H";
 }
 
 void pauseScreen()

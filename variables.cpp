@@ -3,7 +3,7 @@
 const int worldWidth = 2001;
 const int worldHeigh = 2001;
 int obstaclePercent = 33;
-int minePercent = 4;
+int minePercent = 4;	//	Default 4
 int gemsPercent = 1;
 int screenWidth = 21;
 int screenHeigh = 21;

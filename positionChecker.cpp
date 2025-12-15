@@ -17,6 +17,8 @@ void treasureCollect()
 		pickCharge = 0;
 	}
 
+	//	More shit here, about scoring
+
 	if(eightSensor(playerX, playerY, 1) >= 3)
 	{
 		world[playerX][playerY] = 4;
@@ -37,10 +39,16 @@ void stepOnMine()
 	}
 	std::cout << "\n\n\t\tYour Score is: " << score << '\n';
 
-	//	More shit here, about scoring
-
 	applyValues();
 	worldGenerator();
 	std::cout << "\n\t\tPress any key to restart.\n";
 	readKey();
+	clearScreen();
+}
+
+void minedObstacle()
+{
+	world[playerX][playerY] = 4;
+	pickaxe --;
+	activePickaxe = pickaxe == 0? false : true;
 }
