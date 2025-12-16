@@ -17,8 +17,6 @@ void treasureCollect()
 		pickCharge = 0;
 	}
 
-	//	More shit here, about scoring
-
 	if(eightSensor(playerX, playerY, 1) >= 3)
 	{
 		world[playerX][playerY] = 4;
@@ -38,6 +36,8 @@ void stepOnMine()
 		}
 	}
 	std::cout << "\n\n\t\tYour Score is: " << score << '\n';
+
+	//	Is score
 
 	applyValues();
 	worldGenerator();
