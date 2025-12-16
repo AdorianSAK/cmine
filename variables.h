@@ -1,3 +1,5 @@
+//	Declaration of variables, random function and definitions.
+
 #include <iostream>
 #include <random>
 

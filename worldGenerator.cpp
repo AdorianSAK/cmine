@@ -8,16 +8,22 @@
 //	5 & 7 = 🚩 Flag: Represented by an emoji, 5 means a flagged cell with no mines and 7 has a mine.
 //	6 & 8 = ? Inquiry: The question mark, 6 means no mines, and 8 has a mine.
 #include "variables.h"
+//#include <chrono>	//	Used for for tickSpinner(...);
 #include <cstdlib>
+#include <vector>
+#include <algorithm>
 
 void porcentualGenerator(int expected, int otherCheck, int brush);
 int eightSensor(int x, int y, int criteria);
 void playerSpawnArea();
 bool isIn(int x, int y, int ratio);
 void clearScreen();
+//void tickSpinner(const std::string& msg);
 
 void worldGenerator()
 {
+	//tickSpinner("Creating a clean grid");
+	std::cout << "Creating new game.\n";
 	//	First convert all values in the grid to 0s.
 	for(int y = 0; y < worldHeigh; y ++)
 	{
@@ -29,6 +35,7 @@ void worldGenerator()
 	std::cout << "The grid is already popullated with 0s.\n";
 
 	//	== == == == == Obstacle Generation == == == == ==
+	//tickSpinner("Generating Obstacles");
 	porcentualGenerator(expectedObstacles, 2, 1);
 	std::cout << "Obstacles generated.\n";
 
@@ -66,6 +73,35 @@ void worldGenerator()
 
 void porcentualGenerator(int expected, int otherCheck, int brush)
 {
+	struct Pos
+	{
+		int x;
+		int y;
+	};
+
+	std::vector<Pos> candidates;
+	for(int y = 0; y < worldHeigh; y ++)
+	{
+		for(int x = 0; x < worldWidth; x ++)
+		{
+			if(world[x][y] != 1 && world[x][y] != otherCheck)
+			{
+				candidates.push_back({x, y});
+			}
+		}
+	}
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+	std::shuffle(candidates.begin(), candidates.end(), gen);
+
+	for(int i = 0; i < expected && i < candidates.size(); i ++)
+	{
+		world[candidates[i].x][candidates[i].y] = brush;
+	}	
+
+	/*
 	int x, y;
 	for(int i = 0; i < expected; i ++)
 	{
@@ -79,8 +115,8 @@ void porcentualGenerator(int expected, int otherCheck, int brush)
 				break;
 			}
 		}while(true);
-		//std::cout << "One cell correctly painted." << i << '\n';
 	}
+	*/
 }
 
 int eightSensor(int x, int y, int criteria)
@@ -130,3 +166,22 @@ bool isIn(int x, int y, int ratio)
 
 	return absoluteX + absoluteY <= ratio + (ratio * 0.07);
 }
+
+/*
+void tickSpinner(const std::string& msg)
+{
+    static const char spinner[] = "|/-\\";
+    static int spin = 0;
+
+    static auto last = std::chrono::steady_clock::now();
+    auto now = std::chrono::steady_clock::now();
+
+    //	Configurable
+    if(std::chrono::duration_cast<std::chrono::milliseconds>(now - last).count() < 60)
+        return;
+
+    last = now;
+
+    std::cout << "\r" << msg << " " << spinner[spin++ % 4] << std::flush;
+}
+*/
