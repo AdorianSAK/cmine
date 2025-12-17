@@ -50,4 +50,4 @@ extern bool gameIsOn;
 #define DARKCYAN "\e[38;5;31m"
 #define BLACK "\e[38;5;232m"
 #define DARKGRAY "\e[38;5;240m"
-#define YELLOW "\e[38;5;226m"
+#define YELLOW "\e[38;5;222m"

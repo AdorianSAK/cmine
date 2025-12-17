@@ -167,8 +167,7 @@ bool isIn(int x, int y, int ratio)
 	return absoluteX + absoluteY <= ratio + (ratio * 0.07);
 }
 
-/*
-void tickSpinner(const std::string& msg)
+/*void tickSpinner(const std::string& msg)
 {
     static const char spinner[] = "|/-\\";
     static int spin = 0;
@@ -183,5 +182,4 @@ void tickSpinner(const std::string& msg)
     last = now;
 
     std::cout << "\r" << msg << " " << spinner[spin++ % 4] << std::flush;
-}
-*/
+}*/
